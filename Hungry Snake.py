@@ -72,16 +72,16 @@ while not exit_game:
             exit_game = True
 
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_d:
+            if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
                 v_x =  d_move
                 v_y = 0
-            if event.key == pygame.K_a:
+            if event.key == pygame.K_a or event.key == pygame.K_LEFT:
                 v_x = -d_move
                 v_y = 0 
-            if event.key == pygame.K_s:
+            if event.key == pygame.K_s or event.key == pygame.K_DOWN:
                 v_y = d_move
                 v_x = 0
-            if event.key == pygame.K_w:
+            if event.key == pygame.K_w or event.key == pygame.K_UP:
                 v_y = -d_move
                 v_x = 0 
             if event.key == pygame.K_SPACE:
@@ -143,3 +143,6 @@ while not exit_game:
 
 
 pygame.quit()
+
+
+
