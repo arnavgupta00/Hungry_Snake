@@ -1,3 +1,4 @@
+from pickle import GLOBAL
 from turtle import circle, width
 import pygame
 import random
@@ -16,7 +17,7 @@ screen_size = (1280,720)
 
 pos_c = (70,70)
 (x_cor,y_cor) = pos_c
-radius_c = 30
+radius_c = 20
 fps = 30 
 d_move = 20 
 v_move = (0,0)
@@ -63,6 +64,21 @@ def circle_placer(gamewindow,Reddish,my_list,radius_c):
 
     
 
+def gameover():
+    global total_length
+    total_length = 1
+    global my_list
+    my_list = []
+    global x_cor
+    x_cor = 70
+    global y_cor
+    y_cor = 70
+    global v_y 
+    v_y= 0 
+    global v_x
+    v_x = 0
+    global score
+    score = 0
 
 #game loop 
 
@@ -95,36 +111,38 @@ while not exit_game:
                 v_y= 0 
                 v_x = 0
                 score = 0
+            if event.key == pygame.K_b:
+                total_length += 10
+                score += 100
             
     
     x_cor += v_x
     y_cor += v_y
 
-    if x_cor > 1300 or x_cor < -20 or y_cor > 740 or y_cor < -20:
-        total_length = 1
-        my_list = []
-        x_cor = 70
-        y_cor = 70 
-        v_y= 0 
-        v_x = 0
-        score = 0
+    if x_cor > 1300 or x_cor < -20 or y_cor > 740 or y_cor < -20 :
+        gameover()
+    
+    
 
     if abs(x_cor - food_x)<20 and abs(y_cor - food_y) <20:
         score += 10
         food_x= random.randint(0,s_width)
         food_y= random.randint(0,s_height)
         total_length += 1
-   
+    
+    
     initial_circle = [] 
     initial_circle.append(x_cor)
     initial_circle.append(y_cor)     
     my_list.append(initial_circle)    
 
+    if initial_circle in my_list[:-1]:
+        gameover()
 
     gamewindow.fill(Gray)
     screen_text(f'Score: {score}',Reddish,5,5)
     screen_text('Reset: L',Reddish,1140,5)
-    screen_text('Pause: Space',Reddish,1140,40)
+    #screen_text('Pause: Space',Reddish,1140,40)
     screen_text('Credits: Ctrl',Reddish,1140,700)
     pygame.draw.circle(gamewindow,White,[food_x,food_y],5)
 
